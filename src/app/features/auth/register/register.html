@@ -1,0 +1,72 @@
+<form class="register" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <h2>Registration Form</h2>
+
+    <!-- username -->
+    <p class="field field-icon">
+      <label for="username"><span><i class="fas fa-user"></i></span></label>
+      <input [class.input-error]="usernameError" type="text" id="username" placeholder="Johny" [(ngModel)]="username"
+        name="username">
+    </p>
+    @if (usernameError) {
+    <p class="error">
+      {{ usernameErrorMessage }}
+    </p>
+    }
+
+    <!-- email -->
+    <p class="field field-icon">
+      <label for="email"><span><i class="fas fa-envelope"></i></span></label>
+      <input [class.input-error]="emailError" type="email" id="email" placeholder="john.doe@gmail.com"
+        [(ngModel)]="email" name="email">
+    </p>
+    @if (emailError) {
+    <p class="error">
+      {{ emailErrorMessage }}
+    </p>
+    }
+
+    <!-- telephone -->
+    <p class="field field-icon">
+      <label for="tel"><span><i class="fas fa-phone"></i></span></label>
+      <select name="select-tel" id="select-tel" class="tel" [(ngModel)]="phone">
+        <option value="00359">+359</option>
+      </select>
+      <input type="text" id="tel" placeholder="885 888 888" [(ngModel)]="phone" name="phone">
+    </p>
+
+    <div>
+      <!-- password -->
+      <p class="field field-icon">
+        <label for="password"><span><i class="fas fa-lock"></i></span></label>
+        <input [class.input-error]="passwordError" type="password" id="password" placeholder="******"
+          [(ngModel)]="password" name="password">
+      </p>
+      @if (passwordError) {
+      <p class="error">
+        {{ passwordErrorMessage }}
+      </p>
+      }
+
+      <!-- rePassword -->
+      <p class="field field-icon">
+        <label for="rePassword"><span><i class="fas fa-lock"></i></span></label>
+        <input [class.input-error]="passwordError" type="password" id="rePassword" placeholder="******"
+          [(ngModel)]="rePassword" name="rePassword">
+      </p>
+      @if (passwordError) {
+      <p class="error">
+        {{ rePasswordErrorMessage }}
+      </p>
+      }
+    </div>
+
+    <button>Create Account</button>
+    <!-- <button [disabled]="registerForm.invalid">Create Account</button> -->
+
+    <p class="text-center">
+      Have an account?
+      <a routerLink="/login">Log In</a>
+    </p>
+  </fieldset>
+</form>
