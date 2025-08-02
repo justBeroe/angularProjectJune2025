@@ -1,6 +1,6 @@
 <div class="profile">
-    <img src="../../../../public/profile.png" alt="default user">
-    <h3>User Info:</h3>
+    <!-- <img src="../../../../public/profile.png" alt="default user"> -->
+    <h3>User details:</h3>
 
     @if(!isEditMode) {
     <div class="flex">
@@ -11,10 +11,10 @@
         <p>Email: </p>
         <p>{{ currentUser()?.email }}</p>
     </div>
-    <div class="flex">
+    <!-- <div class="flex">
         <p>Phone: </p>
         <p>{{ currentUser()?.phone }}</p>
-    </div>
+    </div> -->
     <button class="edit-button" (click)="onEdit()">Edit</button>
     } @else {
     <form [formGroup]="profileForm" (ngSubmit)="onSave()">

@@ -60,18 +60,31 @@ export class Login {
     return true;
   }
 
+  // onSubmit(): void {
+  //   // this.validateEmail();
+  //   // this.validatePassword();
+
+  //   if (this.isFormValid()) {
+  //     const response = this.authService.login(this.email, this.password);
+
+  //     if (response === true) {
+  //       this.router.navigate(['/home']);
+  //     }
+  //   }
+  // }
+
   onSubmit(): void {
-    // this.validateEmail();
-    // this.validatePassword();
-
-    if (this.isFormValid()) {
-      const response = this.authService.login(this.email, this.password);
-
-      if (response === true) {
+  if (this.isFormValid()) {
+    this.authService.login(this.email, this.password).subscribe(success => {
+      if (success) {
         this.router.navigate(['/home']);
+      } else {
+        alert('Login failed - 401 Unauthorized');
       }
-    }
+    });
   }
+}
+
 
   private isValidEmail(email: string): boolean {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;

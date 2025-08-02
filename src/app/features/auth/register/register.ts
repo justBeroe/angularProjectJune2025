@@ -122,23 +122,42 @@ export class Register {
     // this.validatePassword();
     // this.validateRePassword;
 
-    if(this.isFormValid()) {
+    if (this.isFormValid()) {
       const response = this.authService.register(
         this.username,
         this.email,
-        this.phone,
+        // this.phone,
         this.password,
         this.rePassword);
 
-        if(response === true){
-        this.router.navigate(['/home']);
+      // Call MongoDB backend via HTTP
+      this.authService.registerInMongo(
+        this.username,
+        this.email,
+        this.password,
+        this.rePassword
+      ).subscribe({
+        next: (res) => {
+          console.log('User saved in MongoDB:', res);
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error('MongoDB registration failed:', err);
+          alert('Registration failed. Try again.');
         }
+      });
+    
+
+
+    if (response === true) {
+      this.router.navigate(['/home']);
     }
   }
+}
 
   private isValidEmail(email: string): boolean {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-    // const emailRegex = /^(?=.{6,})[a-zA-Z][a-zA-Z0-9._-]*@gmail\.(com|bg)$/;
-    return emailRegex.test(email);
-  }
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+  // const emailRegex = /^(?=.{6,})[a-zA-Z][a-zA-Z0-9._-]*@gmail\.(com|bg)$/;
+  return emailRegex.test(email);
+}
 }

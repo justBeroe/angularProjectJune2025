@@ -31,7 +31,7 @@ span {
 }
 
 button {
-    background-color: #4eed56;
+    background-color: #05700b;
     color: white;
 }
 
@@ -42,7 +42,7 @@ button:hover {
 /* header  */
 
 header {
-    background:#358205 
+    background:rgb(7, 140, 7) 
 }
 
 header ul {
@@ -121,7 +121,7 @@ justify-content: center;
 }
 
 .mini-navbar ul li {
-    background-color: #0a8a0a;
+    background-color: #2fff00;
     width: 15vw;
     text-align: center;
     padding: 5px;
@@ -275,7 +275,7 @@ footer {
 display: flex;
 align-items: center;
 justify-content: space-evenly;
-background-color:#109407;
+background-color:#0a5b04;
 height: 8vh;
 color: white;
 text-shadow: 1px 1px black;
