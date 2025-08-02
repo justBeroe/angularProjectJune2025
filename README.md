@@ -15,7 +15,12 @@ Part 3
 
 Songs button was connected with Angular to API.
 
-Part 3 
+Part 4 
 
 A new feature button was created "New Artist" where by specifying the ID new list with songs will pop up.
+
+Part 5
+
+Login and register was fixed.
+user-login-api folder contains registerin and loginin APIs with mongodb.
 
