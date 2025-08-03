@@ -50,8 +50,10 @@ export class AuthService {
             return of(false); // immediately return false wrapped in observable
         }
 
-        return this.http.post(`${this.apiUrl}/loginin`, { email, password }).pipe(
-            map((user: any) => {
+        return this.http.post<User>(`${this.apiUrl}/loginin`, { email, password }).pipe(
+           //user: any was fixed with generic type added ---> http.post<User>
+           
+            map((user: User) => {
                 // Assuming login successful, set current user etc.
                 this._currentUser.set(user);
                 this._isLoggedIn.set(true);
