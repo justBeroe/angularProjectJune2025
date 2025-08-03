@@ -17,5 +17,6 @@ protected authService = inject(AuthService);
 
   logout(): void {
    this.authService.logout();
+   this.router.navigate(['/home']);
   }
 }
