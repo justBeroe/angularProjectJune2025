@@ -1,4 +1,10 @@
-Song shop app create:
+To start the song shop:
+
+1.ng serve
+2.Backend start in folder /user-login-api/node server.js  ---> port 5000
+3.Backend start in folder /deezer-api-server/node server.js ---> port 4000
+
+Project create actions:
 
 Part 1
 
