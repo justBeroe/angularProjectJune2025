@@ -21,15 +21,15 @@ export const routes: Routes = [
         loadComponent: () => import('./features/auth/register/register').then(c => c.Register)
     },
     {
-        path: 'themes/:artistId',
+        path: 'songs/:artistId',
         loadComponent: () => import('./features/themes/theme-board/theme-board').then(c => c.ThemeBoard)
     }, {
-        path: 'themes',
-        redirectTo: 'themes/27',
+        path: 'songs',
+        redirectTo: 'songs/27',
         pathMatch: 'full'
     },
     {
-        path: 'add-theme',
+        path: 'change-song',
         loadComponent: () => import('./features/themes/new-theme/new-theme').then(c => c.NewTheme)
     },
     {

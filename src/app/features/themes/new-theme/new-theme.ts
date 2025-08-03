@@ -86,7 +86,7 @@ export class NewTheme {
    this.songService.getSongsWithID(this.artistId).subscribe({
     next: songs => {
       this.songs = songs;
-      this.router.navigate(['/themes',this.artistId]);  // Redirect only after fetching
+      this.router.navigate(['/songs',this.artistId]);  // Redirect only after fetching
     },
     error: err => {
       console.error('Error loading songs:', err);
