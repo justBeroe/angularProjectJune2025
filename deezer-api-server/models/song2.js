@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const songSchema = new mongoose.Schema({
+const songSchema2 = new mongoose.Schema({
   id: { type: Number, unique: true, required: true },
   title: String,
   preview: String,
@@ -9,13 +9,9 @@ const songSchema = new mongoose.Schema({
     name: String,
     picture: String
   },
-  album: {
-    id: Number,
-    title: String,
-    cover: String
-  }
+  album: String
 });
 
-module.exports = mongoose.model('Song', songSchema);
+module.exports = mongoose.model('Song2', songSchema2);
 
 //creates a MongoDB collection named:
