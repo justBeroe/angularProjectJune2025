@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable, of, switchMap } from "rxjs";
 
 import { Song } from "../../models/song.model";
+import { Song2 } from "../../models/song2.model";
 //import { Theme } from "../../models";
 
 @Injectable({
@@ -11,7 +12,9 @@ import { Song } from "../../models/song.model";
 export class SongService {
     // private apiUrl = 'http://localhost:3000/api/themes';
     private fetchDeezerUrl = 'http://localhost:4000/api/fetch-deezer';
+    private fetchJamendoUrl = 'http://localhost:4000/api/fetch-jamendo';
     private apiUrl = 'http://localhost:4000/api/songs';
+    private apiUrl2 = 'http://localhost:4000/api/songs2';
    
     // themes$: Observable<Song[]>;
     
@@ -39,6 +42,12 @@ export class SongService {
         );
     }
 
+         getSongsWithID2(artistId: number = 9): Observable<Song2[]> {
+        // Make request to fetch songs from given artistId, then get songs from MongoDB
+        return this.httpClient.get(`${this.fetchJamendoUrl}?artistId=${artistId}`).pipe(
+            switchMap(() => this.httpClient.get<Song2[]>(this.apiUrl2))
+        );
+    }
         createSong(title: string, id: number): Observable<Song> {
         return this.httpClient.post<Song>(`${this.apiUrl}/themes`, { title, id }, {
             withCredentials: true,

@@ -23,14 +23,27 @@ export const routes: Routes = [
     {
         path: 'songs/:artistId',
         loadComponent: () => import('./features/themes/theme-board/theme-board').then(c => c.ThemeBoard)
+    },
+    {
+        path: 'songs2/:artistId',
+        loadComponent: () => import('./features/themes/song2-board/theme-board').then(c => c.ThemeBoard2)
     }, {
         path: 'songs',
         redirectTo: 'songs/27',
         pathMatch: 'full'
     },
     {
+        path: 'songs2',
+        redirectTo: 'songs2/9',
+        pathMatch: 'full'
+    },
+    {
         path: 'change-song',
         loadComponent: () => import('./features/themes/new-theme/new-theme').then(c => c.NewTheme)
+    },
+    {
+        path: 'change-song2',
+        loadComponent: () => import('./features/themes/new-song2/new-theme').then(c => c.NewTheme2)
     },
     {
         path: 'profile',
