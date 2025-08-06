@@ -1,30 +1,36 @@
-<form class="register" (ngSubmit)="onSubmit()">
+<form class="register" [formGroup]="registerFormGroup" (ngSubmit)="onSubmit()">
   <fieldset>
     <h2>Registration Form</h2>
 
     <!-- username -->
     <p class="field field-icon">
       <label for="username"><span><i class="fas fa-user"></i></span></label>
-      <input [class.input-error]="usernameError" type="text" id="username" placeholder="Johny" [(ngModel)]="username"
-        name="username">
+        <input type="text" id="username" placeholder="Johny"
+        name="username"
+        formControlName="username"
+        >
     </p>
-    @if (usernameError) {
-    <p class="error">
-      {{ usernameErrorMessage }}
-    </p>
-    }
+     <!-- minlength="5" -->
+     
+         @if(registerFormGroup.get('username')?.invalid && registerFormGroup.get('username')?.touched ){
+            <div class="alert alert-danger">
+                Username is required!
+            </div>
+            }
 
     <!-- email -->
     <p class="field field-icon">
       <label for="email"><span><i class="fas fa-envelope"></i></span></label>
-      <input [class.input-error]="emailError" type="email" id="email" placeholder="john.doe@gmail.com"
-        [(ngModel)]="email" name="email">
+      <input  type="email" id="email" placeholder="john.doe@gmail.com"
+         name="email"
+         formControlName="email"
+         >
     </p>
-    @if (emailError) {
-    <p class="error">
-      {{ emailErrorMessage }}
-    </p>
-    }
+       @if(registerFormGroup.get('email')?.invalid && registerFormGroup.get('email')?.touched ){
+            <div class="alert alert-danger">
+                Email is required!
+            </div>
+            }
 
     <!-- telephone -->
     <!-- <p class="field field-icon">
@@ -39,30 +45,25 @@
       <!-- password -->
       <p class="field field-icon">
         <label for="password"><span><i class="fas fa-lock"></i></span></label>
-        <input [class.input-error]="passwordError" type="password" id="password" placeholder="******"
-          [(ngModel)]="password" name="password">
+        <input  type="password" id="password" placeholder="******"
+         
+          name="password"
+          formControlName="password">
       </p>
-      @if (passwordError) {
-      <p class="error">
-        {{ passwordErrorMessage }}
-      </p>
-      }
+   
 
       <!-- rePassword -->
       <p class="field field-icon">
         <label for="rePassword"><span><i class="fas fa-lock"></i></span></label>
-        <input [class.input-error]="passwordError" type="password" id="rePassword" placeholder="******"
-          [(ngModel)]="rePassword" name="rePassword">
+        <input  type="password" id="rePassword" placeholder="******"
+          name="rePassword"
+          formControlName="rePassword">
       </p>
-      @if (passwordError) {
-      <p class="error">
-        {{ rePasswordErrorMessage }}
-      </p>
-      }
+   
     </div>
 
-    <button>Create Account</button>
-    <!-- <button [disabled]="registerForm.invalid">Create Account</button> -->
+    <!-- <button>Create Account</button> -->
+    <button [disabled]="registerFormGroup.invalid">Create Account</button>
 
     <p class="text-center">
       Have an account?
