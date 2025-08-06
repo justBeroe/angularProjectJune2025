@@ -1,0 +1,13 @@
+<h2>Deezer Artists</h2>
+<div *ngIf="artistd$ | async as deezerArtists">
+  <div *ngFor="let artist of deezerArtists; ">
+    <app-theme-item [artist]="artist" variant="compact"></app-theme-item>
+  </div>
+</div>
+
+<h2>Jamendo Artists</h2>
+<div *ngIf="artistj$ | async as jamendoArtists">
+  <div *ngFor="let artist of jamendoArtists; ">
+    <app-theme-item [artist]="artist" variant="compact"></app-theme-item>
+  </div>
+</div>

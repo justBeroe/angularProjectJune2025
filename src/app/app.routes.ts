@@ -19,6 +19,11 @@ export const routes: Routes = [
     {
         path: 'register',
         loadComponent: () => import('./features/auth/register/register').then(c => c.Register)
+    }
+    ,
+    {
+        path: 'artists',
+        loadComponent: () => import('./features/themes/artist-board/theme-board').then(c => c.ArtistBoard)
     },
     {
         path: 'songs/:artistId',
