@@ -14,13 +14,13 @@ import { Song2 } from '../../../models/song2.model';
   styleUrl: './new-theme.css'
 })
 export class NewTheme2 {
- private authService = inject(AuthService);
+  private authService = inject(AuthService);
   private themesService = inject(ThemesService);
   private router = inject(Router);
   artistId = 9; // example dynamic artist ID
   songs: Song2[] = [];  // <-- add this property to store fetched songs
 
-  constructor(private songService: SongService) {}
+  constructor(private songService: SongService) { }
 
   // themeName = '';
   // postText = '';
@@ -84,19 +84,23 @@ export class NewTheme2 {
     //     });
     // }
 
-   this.songService.getSongsWithID2(this.artistId).subscribe({
-    next: songs => {
-      this.songs = songs;
-      this.router.navigate(['/songs2',this.artistId]);  // Redirect only after fetching
-    },
-    error: err => {
-      console.error('Error loading songs:', err);
-      // Optionally handle error (show message, etc.)
-    }
-  });
+    this.songService.getSongsWithID2(this.artistId).subscribe({
+      next: songs => {
+        this.songs = songs;
+        this.router.navigate(['/songs2',this.artistId]);  // Redirect only after fetching
+        // this.router.navigate(['/songs2'], {
+        //   queryParams: { artistId: this.artistId }
+        // });
+
+      },
+      error: err => {
+        console.error('Error loading songs:', err);
+        // Optionally handle error (show message, etc.)
+      }
+    });
   }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.loadSongs(this.artistId);
   }
 

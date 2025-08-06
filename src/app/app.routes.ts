@@ -36,7 +36,9 @@ export const routes: Routes = [
         path: 'songs2',
         redirectTo: 'songs2/9',
         pathMatch: 'full'
-    },
+    }
+    
+    ,
     {
         path: 'change-song',
         loadComponent: () => import('./features/themes/new-theme/new-theme').then(c => c.NewTheme)

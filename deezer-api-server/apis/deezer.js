@@ -32,8 +32,18 @@ router.get('/api/fetch-deezer', async (req, res) => {
       }
     }));
 
-    await Song.deleteMany({});
-    await Song.insertMany(cleanedTracks);
+    // await Song.deleteMany({});
+    // await Song.insertMany(cleanedTracks);
+
+         const bulkOps = cleanedTracks.map(track => ({
+          updateOne: {
+            filter: { id: track.id },
+            update: { $set: track },
+            upsert: true
+          }
+        }));
+    
+        const result = await Song.bulkWrite(bulkOps);
 
     res.json({ message: `✅ Data fetched for artist ${artistId} and saved to MongoDB`, count: cleanedTracks.length });
   } catch (error) {
@@ -44,8 +54,17 @@ router.get('/api/fetch-deezer', async (req, res) => {
 
 // GET /api/songs
 router.get('/api/songs', async (req, res) => {
+//   try {
+//     const songs = await Song.find({});
+//     res.json(songs);
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to retrieve songs', details: error.message });
+//   }
+// });
+  const artistId = Number(req.query.artistId);
   try {
-    const songs = await Song.find({});
+    const filter = artistId ? { 'artist.id': artistId } : {};
+    const songs = await Song.find(filter);
     res.json(songs);
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve songs', details: error.message });

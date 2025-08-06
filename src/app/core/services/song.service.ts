@@ -38,15 +38,19 @@ export class SongService {
      getSongsWithID(artistId: number = 85): Observable<Song[]> {
         // Make request to fetch songs from given artistId, then get songs from MongoDB
         return this.httpClient.get(`${this.fetchDeezerUrl}?artistId=${artistId}`).pipe(
-            switchMap(() => this.httpClient.get<Song[]>(this.apiUrl))
+            switchMap(() => this.httpClient.get<Song[]>(`${this.apiUrl}?artistId=${artistId}`))
         );
     }
 
-         getSongsWithID2(artistId: number = 9): Observable<Song2[]> {
+         getSongsWithID2(artistId: number = 99): Observable<Song2[]> {
         // Make request to fetch songs from given artistId, then get songs from MongoDB
         return this.httpClient.get(`${this.fetchJamendoUrl}?artistId=${artistId}`).pipe(
-            switchMap(() => this.httpClient.get<Song2[]>(this.apiUrl2))
-        );
+            switchMap(() => this.httpClient.get<Song2[]>(`${this.apiUrl2}?artistId=${artistId}`)));
+
+            //Fetch only from MongoDB test
+
+            //  return this.httpClient.get<Song2[]>(`${this.apiUrl2}?artistId=${artistId}`);
+        
     }
         createSong(title: string, id: number): Observable<Song> {
         return this.httpClient.post<Song>(`${this.apiUrl}/themes`, { title, id }, {
