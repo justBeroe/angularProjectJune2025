@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { NotFound } from './shared/components/not-found/not-found';
 import { ThemeContent } from './features/themes/theme-content/theme-content';
+import { AuthGuard } from './core/guards';
 
 export const routes: Routes = [
     {
@@ -26,11 +27,11 @@ export const routes: Routes = [
         loadComponent: () => import('./features/themes/artist-board/theme-board').then(c => c.ArtistBoard)
     },
     {
-        path: 'songs/:artistId',
+        path: 'songs/:artistId',        
         loadComponent: () => import('./features/themes/theme-board/theme-board').then(c => c.ThemeBoard)
     },
     {
-        path: 'songs2/:artistId',
+        path: 'songs2/:artistId',        
         loadComponent: () => import('./features/themes/song2-board/theme-board').then(c => c.ThemeBoard2)
     }, {
         path: 'songs',
@@ -42,18 +43,21 @@ export const routes: Routes = [
         redirectTo: 'songs2/9',
         pathMatch: 'full'
     }
-    
+
     ,
     {
         path: 'change-song',
+        canActivate: [AuthGuard],
         loadComponent: () => import('./features/themes/new-theme/new-theme').then(c => c.NewTheme)
     },
     {
         path: 'change-song2',
+         canActivate: [AuthGuard],
         loadComponent: () => import('./features/themes/new-song2/new-theme').then(c => c.NewTheme2)
     },
     {
         path: 'profile',
+        canActivate: [AuthGuard],
         loadComponent: () => import('./features/profile/profile').then(c => c.Profile)
     },
     {
