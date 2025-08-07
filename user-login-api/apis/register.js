@@ -18,7 +18,18 @@ router.post('/registerin', async (req, res) => {
   const user = new User({ username, email, password }); // plain text password
   await user.save();
 
-  res.status(201).json({ message: 'User created successfully (not hashed)' });
+  // res.status(201).json({ message: 'User created successfully (not hashed)' });
+  res.status(201).json({
+  message: 'User created successfully (not hashed)',
+  user: {
+    _id: user._id,
+    username: user.username,
+    email: user.email
+  }
+});
+
+
+
 });
 
 module.exports = router;

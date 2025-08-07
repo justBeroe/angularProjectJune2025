@@ -50,6 +50,11 @@
           name="password"
           formControlName="password">
       </p>
+       @if(registerFormGroup.hasError('passwordsMismatch') ){
+            <div class="alert alert-danger">
+                Passwords do not match.
+            </div>
+            }
    
 
       <!-- rePassword -->
@@ -63,7 +68,7 @@
     </div>
 
     <!-- <button>Create Account</button> -->
-    <button [disabled]="registerFormGroup.invalid">Create Account</button>
+    <button class="btn btn-primary" [disabled]="registerFormGroup.invalid">Create Account</button>
 
     <p class="text-center">
       Have an account?

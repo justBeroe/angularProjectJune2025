@@ -1,7 +1,7 @@
 import { Injectable, signal } from "@angular/core";
 import { User } from "../../models";
 import { HttpClient } from "@angular/common/http";
-import { catchError, map, Observable, of } from "rxjs";
+import { catchError, map, Observable, of, tap } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +30,7 @@ export class AuthService {
         }
     }
 
+
     // login(email: string, password: string): boolean {
 
     //     if (email && password) {
@@ -51,8 +52,8 @@ export class AuthService {
         }
 
         return this.http.post<User>(`${this.apiUrl}/loginin`, { email, password }).pipe(
-           //user: any was fixed with generic type added ---> http.post<User>
-           
+            //user: any was fixed with generic type added ---> http.post<User>
+
             map((user: User) => {
                 // Assuming login successful, set current user etc.
                 this._currentUser.set(user);
@@ -107,11 +108,54 @@ export class AuthService {
         localStorage.removeItem('currentUser');
     }
 
-    getCurrentUserId(): string | null {
+    // getCurrentUserId(): string | null {
 
-        return this._currentUser()?.id || null;
+    //     return this._currentUser()?.id || null;
 
+    // }
+
+    ///
+
+    /** ✅ GET all users */
+    getAllUsers(): Observable<User[]> {
+        return this.http.get<User[]>(this.apiUrl).pipe(
+            // Optionally map _id to id for Angular usage
+            map(users =>
+                users.map(user => ({
+                    ...user,
+                    id: user._id
+                }))
+            )
+        );
     }
+
+    /** ✅ Get a single user by ID */
+    getUserById(id: string): Observable<User> {
+        return this.http.get<User>(`${this.apiUrl}/${id}`);
+    }
+
+
+
+    updateUser(user: User): Observable<User> {
+        if (!user.id) {
+            throw new Error('User ID is required for update');
+        }
+
+        // Prepare payload without the 'id' property
+        const payload = {
+            username: user.username,
+            email: user.email
+        };
+
+        return this.http.put<User>(`${this.apiUrl}/users/${user.id}`, payload).pipe(
+            tap(updatedUser => {
+                // ✅ Update the signal so your template reflects the change
+                this._currentUser.set(updatedUser);
+            })
+        );
+    }
+
+
 
 
 }

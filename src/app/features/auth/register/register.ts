@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services';
@@ -10,7 +10,7 @@ import { AuthService } from '../../../core/services';
   styleUrl: './register.css'
 })
 export class Register {
-
+  private _isLoggedIn = signal<boolean>(false);
   private formBuilder = inject(FormBuilder);
 
   registerFormGroup: FormGroup;
@@ -23,12 +23,20 @@ export class Register {
         // Validators.minLength(5)
       ]],
       email: ['dobromirtt@gmail.com', Validators.required],
-      password: 123,
-      rePassword: 123
-      // ,
-      // operatingSystem: ''
-    })
+      password: ['123', Validators.required],
+      rePassword: ['123', Validators.required]
+    }, { validators: this.passwordsMatchValidator });
+
   }
+
+
+  passwordsMatchValidator(formGroup: FormGroup): { [key: string]: any } | null {
+    const password = formGroup.get('password')?.value;
+    const rePassword = formGroup.get('rePassword')?.value;
+
+    return password === rePassword ? null : { passwordsMismatch: true };
+  }
+
 
 
   //OLD validaiton without 
@@ -144,7 +152,7 @@ export class Register {
     // this.validatePassword();
     // this.validateRePassword;
 
-      if (this.registerFormGroup.valid)  {
+    if (this.registerFormGroup.valid) {
 
       const formValues = this.registerFormGroup.value;
       console.log('Submitted form values:', formValues);
@@ -171,12 +179,20 @@ export class Register {
         rePassword
       ).subscribe({
         next: (res) => {
+
+
           console.log('User saved in MongoDB:', res);
+
+          // ✅ Get the _id from the response
+          const mongoUserId = (res as any).user._id;
+          console.log('MongoDB _id:', mongoUserId);
+          localStorage.setItem('mongoUserId', mongoUserId);
+          this._isLoggedIn.set(true);
           this.router.navigate(['/home']);
         },
         error: (err) => {
-          console.error('MongoDB registration failed:', err);
-          alert('Registration failed. Try again.' + err);
+          console.error('MongoDB registration failed [API registerin down]:', err);
+          alert('Registration failed. Please check whether API on port 5000 registerin is up OR User confilict in DB!');
         }
       });
 

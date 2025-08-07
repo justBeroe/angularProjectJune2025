@@ -20,11 +20,13 @@ export class Profile {
 
   constructor() {
     this.profileForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(5)]],
-      email: ['', [Validators.required, Validators.pattern(/^(?=.{6,})[a-zA-Z][a-zA-Z0-9._-]*@gmail\.(com|bg)$/)]],
-      phone: ['']
+      username: ['', [Validators.required]],
+      // email: ['', [Validators.required, Validators.pattern(/^(?=.{6,})[a-zA-Z][a-zA-Z0-9._-]*@gmail\.(com|bg)$/)]],
+      email: ['', [Validators.required]]
     })
   }
+
+
 
   get username(): AbstractControl<any, any> | null {
     return this.profileForm.get('username');
@@ -88,18 +90,37 @@ export class Profile {
 
   onSave(): void {
     if (this.profileForm.valid) {
-      const { username, email, phone } = this.profileForm.value
+      const { username, email } = this.profileForm.value
+
+      // Get the userID from localStorage
+      const userId = localStorage.getItem('mongoUserId');
+      console.log(userId);
+
+
+      if (!userId) {
+        console.error('User ID not found in localStorage');
+        return; // or handle the error appropriately
+      }
 
       const user = <User>{
+        id: userId,          // Add the user ID here
         username: username,
-        email: email,
-        phone: phone
+        email: email
       };
+      console.log(user);
 
-      // this.authService.update(user);
 
-      this.isEditMode = false;
-      this.profileForm.reset();
-    }
+
+   this.authService.updateUser(user).subscribe({
+      next: updatedUser => {
+        console.log('User updated successfully:', updatedUser);
+
+        this.isEditMode = false;
+        this.profileForm.reset();
+      },
+      error: err => {
+        console.error('Update failed:', err);
+      }
+    });
   }
-}
+}}
