@@ -86,15 +86,21 @@ export class Login {
 
   onSubmit(): void {
 
-  // if (this.isFormValid()) {
-  //   this.authService.login(this.email, this.password).subscribe(success => {
-  //     if (success) {
-  //       this.router.navigate(['/home']);
-  //     } else {
-  //       alert('Login failed - 401 Unauthorized');
-  //     }
-  //   });
-  // }
+  if (this.loginFormGroup.valid) {
+    const formValues = this.loginFormGroup.value;
+      console.log('Submitted form values:', formValues);
+
+      // Destructure values
+      const {  email, password } = formValues;
+    
+    this.authService.login(email, password).subscribe(success => {
+      if (success) {
+        this.router.navigate(['/home']);
+      } else {
+        alert('Login failed - 401 Unauthorized');
+      }
+    });
+  }
   
 }
 
