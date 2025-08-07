@@ -1,8 +1,35 @@
 To start the song shop:
 
-1.ng serve
-2.Backend start in folder /user-login-api/node server.js  ---> port 5000
-3.Backend start in folder /deezer-api-server/node server.js ---> port 4000
+1.Start Angular project: ng serve 
+
+2.Backend Login/Register APIs start in folder /user-login-api/npm start  ---> port 5000
+
+Example:
+
+user-login-api>npm start
+
+> user-login-api@1.0.0 start
+> node server.js
+
+✔ Loaded API route from login.js
+✔ Loaded API route from register.js
+✔ Loaded API route from updateuser.js
+✔ Loaded API route from users.js
+
+3.Backend song APIs start in folder /deezer-api-server/npm start ---> port 4000
+
+Example:
+
+deezer-api-server>npm start
+
+> deezer-api-server@1.0.0 start
+> node server.js
+
+✔ Loaded route: deezer.js
+✔ Loaded route: deezerartists.js
+✔ Loaded route: jamendo.js
+✔ Loaded route: jamendoartists.js
+
 
 Project create actions:
 
