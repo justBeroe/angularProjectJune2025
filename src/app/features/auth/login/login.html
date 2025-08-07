@@ -1,31 +1,35 @@
-<form class="login" (ngSubmit)="onSubmit()">
+<form class="login" [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
     <fieldset>
-        <h2>Login Form</h2>
+        <h2>Login</h2>
 
         <p class="field field-icon">
             <label for="email"><span><i class="fas fa-envelope"></i></span></label>
-            <input [class.input-error]="emailError" type="email" name="email" id="email"
-                placeholder="john.doe@gmail.com" [(ngModel)]="email" (blur)="validateEmail()">
+            <input  type="email" name="email" id="email"
+                 formControlName="email" >
+                <!-- (blur)="validateEmail()" -->
+                 <!-- placeholder="dobromirtt@gmail.com" -->
         </p>
-        @if (emailError) {
-        <p class="error">
-            {{ emailErrorMessage }}
-        </p>
-        }
+         @if(loginFormGroup.get('email')?.invalid && loginFormGroup.get('email')?.touched ){
+            <div class="alert alert-danger">
+                Email is required!
+            </div>
+            }
 
         <p class="field field-icon">
             <label for="password"><span><i class="fas fa-lock"></i></span></label>
-            <input [class.input-error]="passwordError" type="password" name="password" id="password" placeholder="******"
-                [(ngModel)]="password" >
+            <input  type="password" name="password" id="password" placeholder="******"
+                formControlName="password" >
         </p>
-        @if (passwordError) {
-        <p class="error">
-            {{ passwordErrorMessage }}
-        </p>
-        }
 
-        <button >Login</button>
-        <!-- <button [disabled]="!isFormValid()">Login</button> -->
+            @if(loginFormGroup.get('password')?.invalid && loginFormGroup.get('password')?.touched ){
+            <div class="alert alert-danger">
+                Password is required!
+            </div>
+            }
+       
+
+        <!-- <button >Login</button> -->
+        <button [disabled]="loginFormGroup.invalid">Login</button>
 
         <p class="text-center">
             Have an account?

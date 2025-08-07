@@ -12,47 +12,58 @@ import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModu
 export class Login {
   private authService = inject(AuthService);
   private router = inject(Router);
+   private formBuilder = inject(FormBuilder);
 
-  email: string = '';
-  password: string = '';
+  loginFormGroup: FormGroup;
 
-  emailError: boolean = false;
-  emailErrorMessage: string = '';
-
-  passwordError: boolean = false;
-  passwordErrorMessage: string = '';
-
-  validateEmail(): void {
-
-    if (!this.email) {
-      this.emailError = true;
-      this.emailErrorMessage = 'Email is required!';
-    } else if (!this.isValidEmail(this.email)) {
-      this.emailError = true;
-      this.emailErrorMessage = 'Email is not valid!';
-
-    } else {
-      this.emailError = false;
-      this.emailErrorMessage = '';
-    }
-  }
-
-
-  validatePassword(): void {
-
-    if (!this.password) {
-      this.passwordError = true;
-      this.passwordErrorMessage = 'Password is required!';
-    }
-    else if (this.password.length < 4) {
-      this.passwordError = true;
-      this.passwordErrorMessage = 'Password must be at least 4 characters!';
-    } else {
-      this.passwordError = false;
-      this.passwordErrorMessage = '';
-    }
+  constructor(private fb: FormBuilder) {
+    this.loginFormGroup = this.fb.group({      
+      email: ['dobromirtt@gmail.com', Validators.required],
+      password: ['123', Validators.required]
+    });
 
   }
+
+  // email: string = '';
+  // password: string = '';
+
+  // emailError: boolean = false;
+  // emailErrorMessage: string = '';
+
+  // passwordError: boolean = false;
+  // passwordErrorMessage: string = '';
+
+  // validateEmail(): void {
+
+  //   if (!this.email) {
+  //     this.emailError = true;
+  //     this.emailErrorMessage = 'Email is required!';
+  //   } else if (!this.isValidEmail(this.email)) {
+  //     this.emailError = true;
+  //     this.emailErrorMessage = 'Email is not valid!';
+
+  //   } else {
+  //     this.emailError = false;
+  //     this.emailErrorMessage = '';
+  //   }
+  // }
+
+
+  // validatePassword(): void {
+
+  //   if (!this.password) {
+  //     this.passwordError = true;
+  //     this.passwordErrorMessage = 'Password is required!';
+  //   }
+  //   else if (this.password.length < 4) {
+  //     this.passwordError = true;
+  //     this.passwordErrorMessage = 'Password must be at least 4 characters!';
+  //   } else {
+  //     this.passwordError = false;
+  //     this.passwordErrorMessage = '';
+  //   }
+
+  // }
 
   isFormValid(): boolean {
 
@@ -74,15 +85,17 @@ export class Login {
   // }
 
   onSubmit(): void {
-  if (this.isFormValid()) {
-    this.authService.login(this.email, this.password).subscribe(success => {
-      if (success) {
-        this.router.navigate(['/home']);
-      } else {
-        alert('Login failed - 401 Unauthorized');
-      }
-    });
-  }
+
+  // if (this.isFormValid()) {
+  //   this.authService.login(this.email, this.password).subscribe(success => {
+  //     if (success) {
+  //       this.router.navigate(['/home']);
+  //     } else {
+  //       alert('Login failed - 401 Unauthorized');
+  //     }
+  //   });
+  // }
+  
 }
 
 
