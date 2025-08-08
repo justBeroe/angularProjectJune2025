@@ -1,3 +1,18 @@
+/* Target input inside .field */
+.field input.ng-valid {
+  border-left: 5px solid #42A948; /* green */
+}
+
+/* Only show red border if touched AND invalid */
+.field input.ng-invalid.ng-touched {
+  border-left: 5px solid #A94442; /* red */
+}
+
+/* Optional: Style the icon red when invalid */
+.field .text-danger {
+  color: #A94442 !important;
+}
+
 .login {
     max-width: 400px;
     margin: 2rem auto;

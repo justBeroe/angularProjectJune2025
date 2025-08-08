@@ -3,7 +3,7 @@
         <h2>Login</h2>
 
         <p class="field field-icon">
-            <label for="email"><span><i class="fas fa-envelope"></i></span></label>
+            <label for="email"><span><i class="fas fa-envelope" [class.text-danger]="loginFormGroup.get('email')?.invalid && loginFormGroup.get('email')?.touched"></i></span></label>
             <input  type="email" name="email" id="email"
                  formControlName="email" >
                 <!-- (blur)="validateEmail()" -->
@@ -16,7 +16,8 @@
             }
 
         <p class="field field-icon">
-            <label for="password"><span><i class="fas fa-lock"></i></span></label>
+            <label for="password"><span><i class="fas fa-lock"  [class.text-danger]="loginFormGroup.get('password')?.invalid && loginFormGroup.get('password')?.touched"></i></span></label>
+            <!-- <label for="password"><span><i class="fas fa-lock" style="color: red;"></i></span></label> -->
             <input  type="password" name="password" id="password" placeholder="******"
                 formControlName="password" >
         </p>
