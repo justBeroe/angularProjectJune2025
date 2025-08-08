@@ -3,11 +3,12 @@ import { Theme } from '../../../models';
 import { CommonModule } from '@angular/common';
 import { Song2 } from '../../../models/song2.model';
 import { Artist } from '../../../models/artist.model';
+import { CommentBox } from '../comment-box/comment-box';
 
 
 @Component({
   selector: 'app-theme-item',
-  imports: [CommonModule],
+  imports: [CommonModule, CommentBox],
   templateUrl: './theme-item.html',
   styleUrl: './theme-item.css'
 })

@@ -24,6 +24,7 @@ export const routes: Routes = [
     ,
     {
         path: 'artists',
+        canActivate: [AuthGuard],
         loadComponent: () => import('./features/themes/artist-board/theme-board').then(c => c.ArtistBoard)
     },
     {
