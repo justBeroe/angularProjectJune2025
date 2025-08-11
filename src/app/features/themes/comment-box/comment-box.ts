@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TimeAgoPipe } from '../../../shared/pipes';
 
 @Component({
   selector: 'app-comment-box',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,TimeAgoPipe],
   templateUrl: './comment-box.html',
   styleUrl: './comment-box.css'
 })
@@ -12,7 +13,9 @@ export class CommentBox implements OnInit {
   @Input() artistId!: number; // Artist ID input from parent component
 
   commentControl = new FormControl('');
-  comments: string[] = [];
+  // CHANGED: store objects instead of strings to include created_at
+  // comments: string[] = [];
+  comments: { text: string; created_at: string }[] = []; // <-- ADDED created_at field
   editingIndex: number | null = null;
 
   currentUserId: string | null = null; // Store current logged-in user's ID
@@ -52,16 +55,23 @@ export class CommentBox implements OnInit {
   }
 
   addOrUpdateComment() {
-    const comment = this.commentControl.value?.trim();
-    if (!comment) return;
+    const commentText = this.commentControl.value?.trim();
+    if (!commentText) return;
 
     if (this.editingIndex !== null) {
       // Update existing comment
-      this.comments[this.editingIndex] = comment;
+      // this.comments[this.editingIndex] = comment;
+         // Update existing comment text only (keep original date)
+      this.comments[this.editingIndex].text = commentText; // <-- CHANGED
       this.editingIndex = null;
     } else {
       // Add new comment
-      this.comments.push(comment);
+      // this.comments.push(comment);
+        // Add new comment with created_at date
+      this.comments.push({
+        text: commentText,
+        created_at: new Date().toISOString() // <-- ADDED date field
+      });
     }
 
     this.commentControl.setValue('');
@@ -69,7 +79,8 @@ export class CommentBox implements OnInit {
   }
 
   editComment(index: number) {
-    this.commentControl.setValue(this.comments[index]);
+    // this.commentControl.setValue(this.comments[index]);
+    this.commentControl.setValue(this.comments[index].text); // <-- CHANGED
     this.editingIndex = index;
   }
 

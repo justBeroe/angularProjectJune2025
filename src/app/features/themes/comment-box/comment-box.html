@@ -9,7 +9,11 @@
   <div class="comment-list">
     @for (comment of comments; track $index) {
       <div class="comment-item">
-        <div class="comment-text">{{ comment }}</div>
+        <div class="comment-text">{{ comment.text }}</div>
+         <!-- Date placed below the text -->
+        <div class="comment-date">
+          <small>Added: {{ comment.created_at | timeAgo }}</small>
+        </div>
         <div class="comment-actions">
           <button (click)="editComment($index)">Edit</button>
           <button (click)="deleteComment($index)">Delete</button>
