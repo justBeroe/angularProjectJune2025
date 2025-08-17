@@ -58,6 +58,14 @@
       </div>
       }
 
+         <!-- Show message if whitespace validator triggered -->
+    @if (registerFormGroup.get('password')?.hasError('whitespace')
+    && registerFormGroup.get('password')?.touched) {
+    <div class="alert alert-danger">
+      Password cannot be empty or just spaces.
+    </div>
+    }
+
 
       <!-- rePassword -->
       <p class="field field-icon">
