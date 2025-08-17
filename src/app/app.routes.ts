@@ -29,10 +29,12 @@ export const routes: Routes = [
     },
     {
         path: 'songs/:artistId',
+        canActivate: [AuthGuard],
         loadComponent: () => import('./features/themes/theme-board/theme-board').then(c => c.ThemeBoard)
     },
     {
         path: 'songs2/:artistId',
+        canActivate: [AuthGuard],
         loadComponent: () => import('./features/themes/song2-board/theme-board').then(c => c.ThemeBoard2)
     }, {
         path: 'songs',
