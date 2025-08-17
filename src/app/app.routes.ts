@@ -28,11 +28,11 @@ export const routes: Routes = [
         loadComponent: () => import('./features/themes/artist-board/theme-board').then(c => c.ArtistBoard)
     },
     {
-        path: 'songs/:artistId',        
+        path: 'songs/:artistId',
         loadComponent: () => import('./features/themes/theme-board/theme-board').then(c => c.ThemeBoard)
     },
     {
-        path: 'songs2/:artistId',        
+        path: 'songs2/:artistId',
         loadComponent: () => import('./features/themes/song2-board/theme-board').then(c => c.ThemeBoard2)
     }, {
         path: 'songs',
@@ -53,7 +53,7 @@ export const routes: Routes = [
     },
     {
         path: 'change-song2',
-         canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         loadComponent: () => import('./features/themes/new-song2/new-theme').then(c => c.NewTheme2)
     },
     {
@@ -62,8 +62,12 @@ export const routes: Routes = [
         loadComponent: () => import('./features/profile/profile').then(c => c.Profile)
     },
     {
-        path: '**',
+        path: 'not-found',
         component: NotFound
+    },
+    {
+        path: '**',
+        redirectTo: 'not-found'
     }
 
 

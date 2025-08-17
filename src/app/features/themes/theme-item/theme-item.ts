@@ -13,7 +13,7 @@ export class ThemeItem implements OnInit, AfterViewInit {
 
   //@Input and @Output are decorators that help pass data between components
   // @Input() theme!: Theme;
-  @Input() theme!: Song;
+  @Input() song!: Song;
   //@Input(): Parent ➡️ Child
   // Purpose:
   // Allows a child component to receive data from its parent component.
@@ -21,15 +21,15 @@ export class ThemeItem implements OnInit, AfterViewInit {
   @Input() variant: 'compact' | 'full' = 'full';
   
   constructor() {
-    console.log(this.theme);
+    console.log(this.song);
 
   }
 
   ngOnInit(): void {
-    console.log(this.theme);
+    console.log(this.song);
   }
 
   ngAfterViewInit(): void {
-    console.log(this.theme);
+    console.log(this.song);
   }
 }

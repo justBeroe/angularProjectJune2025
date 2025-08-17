@@ -5,8 +5,8 @@
     <!-- OLD WAY !!! --- this should be set imports: [CommonModule], -->
     <!-- <app-theme-item *ngfor="let theme of themes" [theme]="theme"></app-theme-item> -->
     <!-- } -->
-    @for (theme of themes$ | async; track theme.id) {
-    <app-theme-item [theme]="theme" [variant]="'compact'"></app-theme-item>
+    @for (song of songs$ | async; track song.id) {
+    <app-theme-item [song]="song" [variant]="'compact'"></app-theme-item>
     }
    <!-- Allows a child component to receive data from its parent component. -->
 
