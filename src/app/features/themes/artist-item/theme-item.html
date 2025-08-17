@@ -6,11 +6,14 @@
             </a>
             <div class="columns">
                 <div [ngClass]="variant">
-                    <p>Artist id: <time>{{artist.id}}</time></p>
+                    <p><a [routerLink]="['/songs', artist.id]">
+                            Artist id: <time>{{ artist.id }}</time>
+                        </a>
+                    </p>
                 </div>
                 <app-comment-box [artistId]="artist.id"></app-comment-box>
             </div>
         </div>
-       
+
     </div>
 </div>

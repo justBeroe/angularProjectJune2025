@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Song2 } from '../../../models/song2.model';
 import { Artist } from '../../../models/artist.model';
 import { CommentBox } from '../comment-box/comment-box';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-theme-item',
-  imports: [CommonModule, CommentBox],
+  imports: [CommonModule, CommentBox,RouterModule],
   templateUrl: './theme-item.html',
   styleUrl: './theme-item.css'
 })
