@@ -1,6 +1,7 @@
 import { User } from "./user.model";
 
 export interface Song {
+  _id: number;
   id: number;
   title: string;
   preview: string;

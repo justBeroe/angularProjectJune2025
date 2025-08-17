@@ -15,9 +15,9 @@ export class SongService {
     private fetchJamendoUrl = 'http://localhost:4000/api/fetch-jamendo';
     private apiUrl = 'http://localhost:4000/api/songs';
     private apiUrl2 = 'http://localhost:4000/api/songs2';
-   
+
     // themes$: Observable<Song[]>;
-    
+
 
     constructor(private httpClient: HttpClient) { }
 
@@ -35,26 +35,42 @@ export class SongService {
     }
 
 
-     getSongsWithID(artistId: number ): Observable<Song[]> {
+    getSongsWithID(artistId: number): Observable<Song[]> {
         // Make request to fetch songs from given artistId, then get songs from MongoDB
         return this.httpClient
-        .get(`${this.fetchDeezerUrl}?artistId=${artistId}`)
-        .pipe(
-            switchMap(() => this.httpClient.get<Song[]>(`${this.apiUrl}?artistId=${artistId}`))
-        );
+            .get(`${this.fetchDeezerUrl}?artistId=${artistId}`)
+            .pipe(
+                switchMap(() => this.httpClient.get<Song[]>(`${this.apiUrl}?artistId=${artistId}`))
+            );
     }
 
-         getSongsWithID2(artistId: number): Observable<Song2[]> {
+    getSongsWithIDMongoDB(artistId: number): Observable<Song[]> {
+        // Only fetch from MongoDB API
+        return this.httpClient.get<Song[]>(`${this.apiUrl}?artistId=${artistId}`);
+    }
+
+    getSongsWithID2(artistId: number): Observable<Song2[]> {
         // Make request to fetch songs from given artistId, then get songs from MongoDB
         return this.httpClient.get(`${this.fetchJamendoUrl}?artistId=${artistId}`).pipe(
             switchMap(() => this.httpClient.get<Song2[]>(`${this.apiUrl2}?artistId=${artistId}`)));
 
-            //Fetch only from MongoDB test
+        //Fetch only from MongoDB test
 
-            //  return this.httpClient.get<Song2[]>(`${this.apiUrl2}?artistId=${artistId}`);
-        
+        //  return this.httpClient.get<Song2[]>(`${this.apiUrl2}?artistId=${artistId}`);
+
     }
-        createSong(title: string, id: number): Observable<Song> {
+
+    updateSong(songId: number, updatedData: any): Observable<any> {
+        return this.httpClient.put(`${this.apiUrl}/${songId}`, updatedData);
+    }
+
+    deleteSong(songId: number): Observable<any> {
+        return this.httpClient.delete(`${this.apiUrl}/${songId}`);
+    }
+
+    //
+
+    createSong(title: string, id: number): Observable<Song> {
         return this.httpClient.post<Song>(`${this.apiUrl}/themes`, { title, id }, {
             withCredentials: true,
         });

@@ -71,4 +71,46 @@ router.get('/api/songs', async (req, res) => {
   }
 });
 
+// ---------------------- //
+// PUT /api/songs/:id  -> Update a song by its MongoDB _id
+router.put('/api/songs/:id', async (req, res) => {
+  try {
+    const songId = req.params.id;
+    const updateData = req.body; // send updated fields in JSON body
+
+    const updatedSong = await Song.findByIdAndUpdate(
+      songId,
+      { $set: updateData },
+      { new: true } // return the updated document
+    );
+
+    if (!updatedSong) {
+      return res.status(404).json({ error: 'Song not found' });
+    }
+
+    res.json({ message: 'Song updated successfully', song: updatedSong });
+  } catch (error) {
+    console.error('Error updating song:', error.message);
+    res.status(500).json({ error: 'Failed to update song', details: error.message });
+  }
+});
+
+// DELETE /api/songs/:id  -> Delete a song by its MongoDB _id
+router.delete('/api/songs/:id', async (req, res) => {
+  try {
+    const songId = req.params.id;
+
+    const deletedSong = await Song.findByIdAndDelete(songId);
+
+    if (!deletedSong) {
+      return res.status(404).json({ error: 'Song not found' });
+    }
+
+    res.json({ message: 'Song deleted successfully', song: deletedSong });
+  } catch (error) {
+    console.error('Error deleting song:', error.message);
+    res.status(500).json({ error: 'Failed to delete song', details: error.message });
+  }
+});
+
 module.exports = router;
