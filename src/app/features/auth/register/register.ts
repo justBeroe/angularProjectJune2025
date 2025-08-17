@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, inject, signal } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services';
 
@@ -19,15 +19,36 @@ export class Register {
     this.registerFormGroup = this.fb.group({
       username: ['justberoe', [
         Validators.required
+        , Register.noWhitespaceValidator()
         // ,
         // Validators.minLength(5)
       ]],
       email: ['dobromirtt@gmail.com', Validators.required],
-      password: ['123', Validators.required],
-      rePassword: ['123', Validators.required]
-    }, { validators: this.passwordsMatchValidator });
+      password: ['123', [Validators.required, Register.noWhitespaceValidator()
+
+      ]], //, Register.noWhitespaceValidator()
+      rePassword: ['123', [Validators.required, Register.noWhitespaceValidator()]] // , Register.noWhitespaceValidator()]
+    }, { validators: [this.passwordsMatchValidator
+      // ,this.emptyFieldsValidator 
+    
+    ]});
 
   }
+
+//   emptyFieldsValidator(formGroup: FormGroup): { [key: string]: any } | null {
+//   const username = formGroup.get('username')?.value?.trim();
+//   const email = formGroup.get('email')?.value?.trim();
+//   const password = formGroup.get('password')?.value?.trim();
+//   const rePassword = formGroup.get('rePassword')?.value?.trim();
+
+//   if (!username || !email || !password || !rePassword) {
+//     return { emptyField: true };
+//   }
+
+//   return null;
+// }
+
+  //
 
 
   passwordsMatchValidator(formGroup: FormGroup): { [key: string]: any } | null {
@@ -36,6 +57,16 @@ export class Register {
 
     return password === rePassword ? null : { passwordsMismatch: true };
   }
+
+static noWhitespaceValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    return isWhitespace ? { whitespace: true } : null;
+  };
+}
+
+
+
 
 
 
