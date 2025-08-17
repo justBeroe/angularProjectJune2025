@@ -65,7 +65,7 @@ export const routes: Routes = [
     },
     {
         path: 'not-found',
-        component: NotFound
+        component: NotFound //
     },
     {
         path: '**',
