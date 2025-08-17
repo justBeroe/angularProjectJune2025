@@ -1,0 +1,48 @@
+.fetch-btn-container {
+  display: flex;
+  justify-content: flex-end; /* align buttons to the right */
+  gap: 10px; /* space between buttons */
+  margin-bottom: 1rem;
+}
+
+.fetch-btn,
+.delete-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Fetch button - green */
+.fetch-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.fetch-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.fetch-btn:active {
+  background-color: #1e7e34;
+  transform: scale(0.98);
+}
+
+/* Delete button - red */
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+.delete-btn:active {
+  background-color: #bd2130;
+  transform: scale(0.98);
+}

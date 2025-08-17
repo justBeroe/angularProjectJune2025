@@ -1,3 +1,13 @@
+<div class="fetch-btn-container">
+  <button (click)="fetchDeezerAll()" class="fetch-btn">
+    Fetch Deezer Artists
+  </button>
+  <!-- New Delete All Songs button -->
+  <button (click)="deleteAllSongs()" class="delete-btn" style="margin-top: 5px;margin-right: 15px;">
+    Delete All Songs
+  </button>
+</div>
+
 <h2>Deezer Artists</h2>
 <div *ngIf="artistd$ | async as deezerArtists">
   <div *ngFor="let artist of deezerArtists; ">

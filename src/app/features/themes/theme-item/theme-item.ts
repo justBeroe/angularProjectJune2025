@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Theme } from '../../../models';
 import { CommonModule } from '@angular/common';
 import { Song } from '../../../models/song.model';
@@ -23,11 +23,16 @@ export class ThemeItem implements OnInit, AfterViewInit {
   // Allows a child component to receive data from its parent component.
   isEditMode: boolean = false;
   editForm!: FormGroup;
+  @Output() songUpdated = new EventEmitter<Song>();
   @Input() variant: 'compact' | 'full' = 'full';
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private songService: SongService,
+  constructor(private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private songService: SongService,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
 
-    private router: Router) {
+  ) {
     console.log(this.song);
 
   }
@@ -64,10 +69,30 @@ export class ThemeItem implements OnInit, AfterViewInit {
     };
 
     this.songService.updateSong(this.song._id, updatedData).subscribe({
-      next: () => {
-        alert('Song updated successfully!');
+      next: (updatedSong) => {
+        //alert('Song updated successfully!');
+        // this.isEditMode = false;
+        // window.location.reload(); // optional
+        // ✅ Update only this.song instead of reloading whole page
+        // this.song = updatedSong;
+        // Make sure artist & album are included
+        this.song = {
+          ...this.song,           // keep old data
+          ...updatedSong,         // overwrite with updated fields
+          artist: updatedSong.artist || this.song.artist,
+          album: updatedSong.album || this.song.album
+        };
+
+
+
+
+        // ✅ Close edit mode
         this.isEditMode = false;
-        window.location.reload(); // optional
+        // ✅ trigger manual change detection
+        this.cdRef.detectChanges();
+
+        // Notify parent
+        this.songUpdated.emit(this.song);
       },
       error: (err) => console.error('Update failed', err)
     });
@@ -87,5 +112,7 @@ export class ThemeItem implements OnInit, AfterViewInit {
       });
     }
   }
+
+
 
 }

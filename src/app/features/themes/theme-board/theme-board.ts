@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/cor
 
 import { CommonModule } from '@angular/common';
 import { ThemeItem } from '../theme-item/theme-item';
-import { catchError, Observable, of, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, Subscription, switchMap } from 'rxjs';
 import { Song } from '../../../models/song.model';
 import { SongService } from '../../../core/services/song.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,12 +18,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ThemeBoard {
   // export class ThemeBoard implements OnInit, OnDestroy {
 
-  subscriptions: Subscription[] = [];
+  // subscriptions: Subscription[] = [];
   songs: Song[] = [];
   // themes$: Observable<Song[]>;
   @Input() artistId!: number;
   // songs$: Observable<Song[]> = new Observable<Song[]>();
-  songs$: Observable<Song[]> = of([]);
+  // songs$: Observable<Song[]> = of([]);
+
+  // BehaviorSubject to manage the songs list
+  private songsSubject = new BehaviorSubject<Song[]>([]);
+  songs$: Observable<Song[]> = this.songsSubject.asObservable();
 
   constructor(private route: ActivatedRoute, private songService: SongService, private router: Router) {
     // Optionally initialize the observable property for async pipe
@@ -84,24 +88,49 @@ export class ThemeBoard {
 
 
   ngOnInit(): void {
-    this.songs$ = this.route.paramMap.pipe(
+    this.route.paramMap.pipe(
       switchMap(params => {
         const artistId = Number(params.get('artistId'));
         return this.songService.getSongsWithIDMongoDB(artistId).pipe(
-          switchMap(songs => {
-            if (!songs || songs.length === 0) {
-              this.router.navigate(['/not-found']);
-              return of([]); // return empty observable to satisfy type
-            }
-            return of(songs);
-          }),
-          catchError(() => { //This handles any error thrown by the HTTP request, like 404, 500, or network failure.
+          catchError(() => {
             this.router.navigate(['/not-found']);
             return of([]);
           })
         );
       })
-    );
+    ).subscribe(songs => {
+      if (!songs || songs.length === 0) {
+        this.router.navigate(['/not-found']);
+      } else {
+        this.songsSubject.next(songs); // ✅ Ensures template updates via BehaviorSubject
+      }
+    });
   }
+
+
+
+
+onSongUpdated(updatedSong: Song) {
+  this.songService.getSongsWithIDMongoDB(updatedSong.artist.id).subscribe({
+    next: (freshSongs: Song[]) => {
+      // Find the updated song in the array
+      const freshSong = freshSongs.find(s => s._id === updatedSong._id);
+      if (!freshSong) return;
+
+      const currentSongs = this.songsSubject.getValue();
+      const updatedSongs = currentSongs.map(s =>
+        s._id === freshSong._id ? freshSong : s
+      );
+      this.songsSubject.next(updatedSongs); // ✅ update template
+      console.log('Song refreshed from MongoDB in parent:', freshSong);
+    },
+    error: (err) => console.error('Failed to fetch songs from DB', err)
+  });
+}
+ // ✅ trackBy function for ngFor
+  trackById(index: number, song: Song) {
+    return song._id;
+  }
+
 }
 

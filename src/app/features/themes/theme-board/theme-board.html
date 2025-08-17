@@ -5,10 +5,18 @@
     <!-- OLD WAY !!! --- this should be set imports: [CommonModule], -->
     <!-- <app-theme-item *ngfor="let theme of themes" [theme]="theme"></app-theme-item> -->
     <!-- } -->
-    @for (song of songs$ | async; track song.id) {
-    <app-theme-item [song]="song" [variant]="'compact'"></app-theme-item>
-    }
-   <!-- Allows a child component to receive data from its parent component. -->
+    <!-- @for (song of songs$ | async; track song.id) {
+    <app-theme-item [song]="song" [variant]="'compact'" (songUpdated)="onSongUpdated($event)"></app-theme-item>
+    } -->
+
+
+    <!-- ✅ Fixed @for -> *ngFor, added trackBy -->
+    <div *ngFor="let song of songs$ | async; trackBy: trackById">
+        <app-theme-item [song]="song" [variant]="'compact'" (songUpdated)="onSongUpdated($event)">
+        </app-theme-item>
+    </div>
+
+    <!-- Allows a child component to receive data from its parent component. -->
 
     <!-- Debug output -->
     <!-- <pre>{{ themes$ }}</pre> -->
