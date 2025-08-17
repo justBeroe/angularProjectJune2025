@@ -16,6 +16,14 @@
     </div>
     }
 
+    <!-- Show message if whitespace validator triggered -->
+    @if (registerFormGroup.get('username')?.hasError('whitespace')
+    && registerFormGroup.get('username')?.touched) {
+    <div class="alert alert-danger">
+      Username cannot be empty or just spaces.
+    </div>
+    }
+
     <!-- email -->
     <p class="field field-icon">
       <label for="email"><span><i class="fas fa-envelope"
