@@ -3,20 +3,33 @@
     Fetch Deezer Artists
   </button>
   <!-- New Delete All Songs button -->
-  <button (click)="deleteAllSongs()" class="delete-btn" style="margin-top: 5px;margin-right: 15px;">
+  <button (click)="deleteAllSongs()" class="delete-btn">
     Delete All Deezer Songs
+  </button>
+
+  <!-- Search input and button -->
+  <input
+    type="text"
+    placeholder="Search artists..."
+    [(ngModel)]="searchTerm"
+    (keyup.enter)="onSearch(searchTerm)"  
+    class="search-input"
+  />
+  <button (click)="onSearch(searchTerm)" class="search-btn">
+    Search Deezer
   </button>
 </div>
 
 <h2>Deezer Artists</h2>
-<div *ngIf="artistd$ | async as deezerArtists">
+<p>Filtered Deezer count: {{ (filteredArtistd$ | async)?.length }}</p>
+<div *ngIf="filteredArtistd$ | async as deezerArtists">
   <div *ngFor="let artist of deezerArtists; ">
     <app-theme-item [artist]="artist" variant="compact"></app-theme-item>
   </div>
 </div>
 
 <h2>Jamendo Artists</h2>
-<div *ngIf="artistj$ | async as jamendoArtists">
+<div *ngIf="filteredArtistj$ | async as jamendoArtists">
   <div *ngFor="let artist of jamendoArtists; ">
     <app-theme-item [artist]="artist" variant="compact"></app-theme-item>
   </div>
