@@ -64,6 +64,11 @@ export const routes: Routes = [
         loadComponent: () => import('./features/profile/profile').then(c => c.Profile)
     },
     {
+        path: 'radio',
+        // canActivate: [AuthGuard],
+        loadComponent: () => import('./features/themes/radio-board/radio-board').then(c => c.RadioBoard)
+    },
+    {
         path: 'not-found',
         component: NotFound //
     },
