@@ -67,12 +67,21 @@ export const routes: Routes = [
         path: 'radio',
         // canActivate: [AuthGuard],
         loadComponent: () => import('./features/themes/radio-board/radio-board').then(c => c.RadioBoard)
-    }
-    ,
+    },
     {
         path: 'test',
         // canActivate: [AuthGuard],
         loadComponent: () => import('./tests/test/test').then(c => c.TestComponent)
+    },
+    {
+        path: 'hottest1',
+        // canActivate: [AuthGuard],
+        loadComponent: () => import('./tests/hottest1/hottest1').then(c => c.Hottest1)
+    },
+    {
+        path: 'promise',
+        // canActivate: [AuthGuard],
+        loadComponent: () => import('./tests/promise1/promise1').then(c => c.Promise1)
     },
     {
         path: 'not-found',
