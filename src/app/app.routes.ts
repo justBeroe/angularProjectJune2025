@@ -67,6 +67,12 @@ export const routes: Routes = [
         path: 'radio',
         // canActivate: [AuthGuard],
         loadComponent: () => import('./features/themes/radio-board/radio-board').then(c => c.RadioBoard)
+    }
+    ,
+    {
+        path: 'test',
+        // canActivate: [AuthGuard],
+        loadComponent: () => import('./tests/test/test').then(c => c.TestComponent)
     },
     {
         path: 'not-found',

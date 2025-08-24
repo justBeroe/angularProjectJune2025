@@ -33,13 +33,14 @@
             <li>
                 <a routerLink="/home">Home</a>
             </li>
+
+            @if (isLoggedIn()) {
             <li>
                 <a routerLink="/songs">Deezer Songs</a>
             </li>
             <li>
                 <a routerLink="/songs2">Jamendo Songs</a>
             </li>
-            @if (isLoggedIn()) {
             <li>
                 <a routerLink="/change-song">New Deezer Artist</a>
             </li>
@@ -49,7 +50,7 @@
             <li>
                 <a routerLink="/artists">All Artists</a>
             </li>
-             <li>
+            <li>
                 <a routerLink="/radio">Radio mix</a>
             </li>
             }
